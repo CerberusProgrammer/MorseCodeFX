@@ -1,59 +1,52 @@
 package BinaryTree;
 
-public class Node <T> {
+public class Node<E> implements Elemento<E> {
 
-    private T data;
-    private Node<T> left;
-    private Node<T> right;
+    E data;
+    Node<E> padre;
+    Node<E> left;
+    Node<E> right;
 
-    public Node() {
-        this.data = null;
-        this.left = null;
-        this.right = null;
-    }
-
-    public Node(T data) {
-        this.data = data;
-        this.left = null;
-        this.right = null;
-    }
-
-    public Node(T data, Node<T> left, Node<T> right) {
-        this.data = data;
-        this.left = left;
+    public Node(E elemento, Node<E> padre, Node<E> hijoIzquierdo, Node<E> right) {
+        this.data = elemento;
+        this.padre = padre;
+        this.left = hijoIzquierdo;
         this.right = right;
     }
 
-    public T getData() {
+    public E getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(E data) {
         this.data = data;
     }
 
-    public Node<T> getLeft() {
+    public Node<E> getPadre() {
+        return padre;
+    }
+
+    public void setPadre(Node<E> padre) {
+        this.padre = padre;
+    }
+
+    public Node<E> getLeft() {
         return left;
     }
 
-    public void setLeft(Node<T> left) {
+    public void setLeft(Node<E> left) {
         this.left = left;
     }
 
-    public Node<T> getRight() {
+    public Node<E> getRight() {
         return right;
     }
 
-    public void setRight(Node<T> right) {
+    public void setRight(Node<E> right) {
         this.right = right;
     }
 
-    @Override
     public String toString() {
-        return "Node{" +
-                "data=" + data +
-                ", left=" + left +
-                ", right=" + right +
-                '}';
+        return getData().toString();
     }
 }
