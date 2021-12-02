@@ -1,16 +1,23 @@
 package BinaryTree;
 
-public class Node<E> implements Elemento<E> {
+public class Node<E> {
 
-    E data;
-    Node<E> padre;
-    Node<E> left;
-    Node<E> right;
+    public E data;
+    public Node<E> root;
+    public Node<E> left;
+    public Node<E> right;
 
-    public Node(E elemento, Node<E> padre, Node<E> hijoIzquierdo, Node<E> right) {
-        this.data = elemento;
-        this.padre = padre;
-        this.left = hijoIzquierdo;
+    public Node() {
+        this.data = null;
+        this.root = null;
+        this.left = null;
+        this.right = null;
+    }
+
+    public Node(E node, Node<E> root, Node<E> left, Node<E> right) {
+        this.data = node;
+        this.root = root;
+        this.left = left;
         this.right = right;
     }
 
@@ -22,12 +29,12 @@ public class Node<E> implements Elemento<E> {
         this.data = data;
     }
 
-    public Node<E> getPadre() {
-        return padre;
+    public Node<E> getRoot() {
+        return root;
     }
 
-    public void setPadre(Node<E> padre) {
-        this.padre = padre;
+    public void setRoot(Node<E> root) {
+        this.root = root;
     }
 
     public Node<E> getLeft() {

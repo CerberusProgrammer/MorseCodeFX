@@ -4,98 +4,99 @@ import java.util.ArrayList;
 
 public class BinaryTree<E> {
 
-    private Node<E> raiz;
-    private int cantidad;
+    private Node<E> root;
+    private int size;
 
     public BinaryTree() {
-        this.cantidad = 0;
+        this.size = 0;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public int getSize() {
+        return size;
     }
 
-    public Elemento<E> getRaiz() {
-        return raiz;
+    public Node<E> getRoot() {
+        return root;
     }
 
-    private Node<E> validar(Elemento<E> elemento) {
-        if (!(elemento instanceof Node)) {
+    private Node<E> check(Node<E> node) {
+        if (node == null)
             return null;
-        }
-        Node<E> node = (Node<E>) elemento;
-        return node.getPadre() == node ? null : node;
+
+        return node.getRoot() == node ? null : node;
     }
 
-    public Elemento<E> obtenerPadre(Elemento<E> elemento) {
-        return validar(elemento).getPadre();
+    public Node<E> getRoot(Node<E> node) {
+        return check(node).getRoot();
     }
 
-    public Elemento<E> obtenerHijoIzquierdo(Elemento<E> elemento) {
-        return validar(elemento).getLeft();
+    public Node<E> getLeft(Node<E> node) {
+        return check(node).getLeft();
     }
 
-    public Elemento<E> obtenerHijoDerecho(Elemento<E> elemento) {
-        return validar(elemento).getRight();
+    public Node<E> getRight(Node<E> node) {
+        return check(node).getRight();
     }
 
-    public boolean esRaiz(Elemento<E> elemento) {
-        return elemento == getRaiz();
+    public boolean isRoot(Node<E> node) {
+        return node == getRoot();
     }
 
-    public Elemento<E> insertarRaiz(E elemento) {
-        if (!estaVacia()) {
+    public Node<E> insertarRaiz(E node) {
+        if (!estaVacia())
             return null;
-        }
-        raiz = crearNodo(elemento, null, null, null);
-        cantidad = 1;
-        return raiz;
+
+        root = crearNodo(node, null, null, null);
+        size = 1;
+
+        return root;
     }
 
-    public Elemento<E> insertarHijoIzquierdo(Elemento<E> elemento, E dato) {
-        Node<E> temporal = validar(elemento);
-        if (temporal.getLeft() != null) {
-            return null;
-        }
+    public Node<E> insertarHijoIzquierdo(Node<E> node, E data) {
+        Node<E> temporal = check(node);
 
-        Node<E> hijoIzquierdo = crearNodo(dato, temporal, null, null);
+        if (temporal.getLeft() != null)
+            return null;
+
+        Node<E> hijoIzquierdo = crearNodo(data, temporal, null, null);
         temporal.setLeft(hijoIzquierdo);
-        cantidad++;
+        size++;
+
         return hijoIzquierdo;
     }
 
-    public Elemento<E> insertarHijoDerecho(Elemento<E> elemento, E dato) {
-        Node<E> temporal = validar(elemento);
-        if (temporal.getRight() != null) {
-            return null;
-        }
+    public Node<E> insertarHijoDerecho(Node<E> node, E data) {
+        Node<E> temporal = check(node);
 
-        Node<E> hijoDerecho = crearNodo(dato, temporal, null, null);
+        if (temporal.getRight() != null)
+            return null;
+
+        Node<E> hijoDerecho = crearNodo(data, temporal, null, null);
         temporal.setRight(hijoDerecho);
-        cantidad++;
+        size++;
+
         return hijoDerecho;
     }
 
-    public Elemento<E> insertar(E dato) {
-        return insertar(dato, getRaiz());
+    public Node<E> insertar(E dato) {
+        return insertar(dato, getRoot());
     }
 
-    private Elemento<E> insertar(E dato, Elemento<E> nodo) {
-        if (nodo == null) {
+    private Node<E> insertar(E dato, Node<E> nodo) {
+        if (nodo == null)
             return insertarRaiz(dato);
-        } else if (((Comparable<E>) dato).compareTo(nodo.getData()) < 0) {
-            if (obtenerHijoIzquierdo(nodo) == null) {
-                return insertarHijoIzquierdo(validar(nodo), dato);
-            }
-            return insertar(dato, obtenerHijoIzquierdo(nodo));
+        else if (((Comparable<E>) dato).compareTo(nodo.getData()) < 0) {
+            if (getLeft(nodo) == null)
+                return insertarHijoIzquierdo(check(nodo), dato);
+
+            return insertar(dato, getLeft(nodo));
         } else {
-            if (obtenerHijoDerecho(nodo) == null) {
-                return insertarHijoDerecho(validar(nodo), dato);
-            }
-            return insertar(dato, obtenerHijoDerecho(nodo));
+            if (getRight(nodo) == null)
+                return insertarHijoDerecho(check(nodo), dato);
+
+            return insertar(dato, getRight(nodo));
         }
     }
-
 
     private Node<E> crearNodo(E elemento, Node<E> padre,
                               Node<E> hijoIzquierdo,
@@ -104,71 +105,71 @@ public class BinaryTree<E> {
     }
 
     public boolean estaVacia() {
-        return getCantidad() == 0;
+        return getSize() == 0;
     }
 
 
-    public Iterable<Elemento<E>> obtenerHijos(Elemento<E> elemento) {
-        ArrayList<Elemento<E>> hijos = new ArrayList<Elemento<E>>(2);
-        if (obtenerHijoIzquierdo(elemento) != null) {
-            hijos.add(obtenerHijoIzquierdo(elemento));
-        }
-        if (obtenerHijoDerecho(elemento) != null) {
-            hijos.add(obtenerHijoDerecho(elemento));
-        }
+    public Iterable<Node<E>> obtenerHijos(Node<E> elemento) {
+        ArrayList<Node<E>> hijos = new ArrayList<>(2);
+
+        if (getLeft(elemento) != null)
+            hijos.add(getLeft(elemento));
+
+        if (getRight(elemento) != null)
+            hijos.add(getRight(elemento));
+
         return hijos;
     }
 
 
-    public ArrayList<Elemento<E>> recorridoPreOrden() {
-        ArrayList<Elemento<E>> elementos = new ArrayList<Elemento<E>>();
-        if (!estaVacia()) {
-            recorridoPreOrden(getRaiz(), elementos);
-        }
+    public ArrayList<Node<E>> recorridoPreOrden() {
+        ArrayList<Node<E>> elementos = new ArrayList<>();
+
+        if (!estaVacia())
+            recorridoPreOrden(getRoot(), elementos);
 
         return elementos;
     }
 
-    private void recorridoPreOrden(Elemento<E> raiz, ArrayList<Elemento<E>> elementos) {
+    private void recorridoPreOrden(Node<E> raiz, ArrayList<Node<E>> elementos) {
         elementos.add(raiz);
-        for (Elemento<E> elemento : obtenerHijos(raiz)) {
+
+        for (Node<E> elemento : obtenerHijos(raiz))
             recorridoPreOrden(elemento, elementos);
-        }
     }
 
-    public ArrayList<Elemento<E>> recorridoInOrden() {
-        ArrayList<Elemento<E>> elementos = new ArrayList<Elemento<E>>();
-        if (!estaVacia()) {
-            recorridoInOrden(getRaiz(), elementos);
-        }
+    public ArrayList<Node<E>> recorridoInOrden() {
+        ArrayList<Node<E>> elementos = new ArrayList<>();
+
+        if (!estaVacia())
+            recorridoInOrden(getRoot(), elementos);
 
         return elementos;
     }
 
-    private void recorridoInOrden(Elemento<E> raiz, ArrayList<Elemento<E>> elementos) {
-        if (obtenerHijoIzquierdo(raiz) != null) {
-            recorridoInOrden(obtenerHijoIzquierdo(raiz), elementos);
-        }
+    private void recorridoInOrden(Node<E> raiz, ArrayList<Node<E>> elementos) {
+        if (getLeft(raiz) != null)
+            recorridoInOrden(getLeft(raiz), elementos);
+
         elementos.add(raiz);
-        if (obtenerHijoDerecho(raiz) != null) {
-            recorridoInOrden(obtenerHijoDerecho(raiz), elementos);
-        }
+
+        if (getRight(raiz) != null)
+            recorridoInOrden(getRight(raiz), elementos);
     }
 
 
-    public ArrayList<Elemento<E>> recorridoPosOrden() {
-        ArrayList<Elemento<E>> elementos = new ArrayList<Elemento<E>>();
-        if (!estaVacia()) {
-            recorridoPosOrden(getRaiz(), elementos);
-        }
+    public ArrayList<Node<E>> recorridoPosOrden() {
+        ArrayList<Node<E>> elementos = new ArrayList<>();
+
+        if (!estaVacia())
+            recorridoPosOrden(getRoot(), elementos);
 
         return elementos;
     }
 
-    private void recorridoPosOrden(Elemento<E> raiz, ArrayList<Elemento<E>> elementos) {
-        for (Elemento<E> elemento : obtenerHijos(raiz)) {
+    private void recorridoPosOrden(Node<E> raiz, ArrayList<Node<E>> elementos) {
+        for (Node<E> elemento : obtenerHijos(raiz))
             recorridoPosOrden(elemento, elementos);
-        }
 
         elementos.add(raiz);
     }
