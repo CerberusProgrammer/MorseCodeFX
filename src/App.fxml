@@ -8,14 +8,13 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App">
-   <children>
-      <ToolBar prefHeight="40.0" prefWidth="1280.0">
-        <items>
-          <Button mnemonicParsing="false" onAction="#importMorseCode" text="Importar" />
-            <Button mnemonicParsing="false" onAction="#insertMorseCode" text="Ingresar" />
-        </items>
-      </ToolBar>
-      <TextArea fx:id="textAreaNormal" layoutX="899.0" layoutY="50.0" prefHeight="660.0" prefWidth="371.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0,0,0);" AnchorPane.leftAnchor="899.0" AnchorPane.rightAnchor="10.0" />
-      <Pane fx:id="paneTree" layoutX="10.0" layoutY="50.0" prefHeight="660.0" prefWidth="875.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0,0,0); -fx-background-color: white; -fx-background-radius: 5;" />
-   </children>
+    <children>
+        <ToolBar prefHeight="40.0" prefWidth="1280.0">
+            <items>
+                <Button mnemonicParsing="false" onAction="#insertMorseCode" text="Ingresar" />
+            </items>
+        </ToolBar>
+        <TextArea fx:id="textAreaNormal" layoutX="899.0" layoutY="50.0" prefHeight="660.0" prefWidth="371.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0,0,0);" AnchorPane.leftAnchor="899.0" AnchorPane.rightAnchor="10.0" />
+        <Pane fx:id="paneTree" layoutX="10.0" layoutY="50.0" prefHeight="660.0" prefWidth="875.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0,0,0); -fx-background-color: white; -fx-background-radius: 5;" />
+    </children>
 </AnchorPane>

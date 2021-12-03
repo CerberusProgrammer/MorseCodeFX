@@ -16,8 +16,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,29 +25,49 @@ import java.util.ResourceBundle;
 public class App implements Initializable {
 
     @FXML
-    public static Pane paneTree;
+    public Pane paneTree;
     @FXML
-    public static TextArea textAreaNormal;
+    public TextArea textAreaNormal;
 
     final int separation = 50;
 
+    public static ArrayList<String> arrayList = new ArrayList<>();
+    public static BinaryTree<String> binaryTree = new BinaryTree<String>();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            String s1;
 
-    }
+            File file = new File("src/codigoMorse.txt");
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-    @FXML
-    void importMorseCode(ActionEvent event) throws IOException {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Buscar archivo de texto plano");
+            while ((s1 = bufferedReader.readLine()) != null)
+                arrayList.add(s1);
 
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("txt", "*.txt")
-        );
+            toBinaryTree();
+            displayBinaryTree();
 
-        File file = fileChooser.showOpenDialog(new Stage());
+            Node node = binaryTree.getRoot();
+            node = node.right;
+            node = node.right;
 
-        Decoder.importWords(file);
+            Node node1 = binaryTree.getRoot(); // T
+            node1 = node1.right; // W
+            node1 = node1.right; // Z
+
+
+            // Z > W = Z esta a la derecha del padre
+            if (((String)node1.getData()).compareTo((String)node1.root.getData()) > 0) {
+                System.out.println("X");
+            } else
+                System.out.println("y");
+
+            System.out.println(node.root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -61,10 +80,43 @@ public class App implements Initializable {
     }
 
     public void displayBinaryTree() {
-        int x = (int) paneTree.getPrefWidth() / 2;
+        int x = (int) (paneTree.getPrefWidth() / 2.33);
         int y = 40;
 
-        draw(x, y, x, y, Decoder.binaryTree.getRoot());
+        draw(x, y, x, y, binaryTree.getRoot());
+        //drawBinaryTree();
+    }
+
+    public void drawBinaryTree() {
+        Node node = binaryTree.getRoot();
+
+        Boolean b = true;
+
+        int x = (int) (paneTree.getPrefWidth() / 2.33);
+        int y = 40;
+
+        node = node.right;
+        System.out.println(binaryTree.obtenerHijos(node));
+        // derecha
+        while (node != null) {
+            Line line = new Line(x, y, x + 40, y + 40);
+            paneTree.getChildren().add(line);
+
+            Circle circle = new Circle(x, y, 20, Paint.valueOf("black"));
+            paneTree.getChildren().add(circle);
+
+            Text text = new Text(x - 3, y + 3, String.valueOf(node).substring(0, 1));
+            text.setFill(Color.WHITE);
+            paneTree.getChildren().add(text);
+
+            if (node.right == null)
+                node = node.left;
+            else
+                node = node.right;
+
+            x += 40;
+            x += 40;
+        }
     }
 
     public void draw(int x1, int y1, int x, int y, Node node) {
@@ -74,13 +126,34 @@ public class App implements Initializable {
         Circle circle = new Circle(x, y, 20, Paint.valueOf("black"));
         paneTree.getChildren().add(circle);
 
-        Text text = new Text(x - 3, y + 3, String.valueOf(node));
+        Text text = new Text(x - 3, y + 3, String.valueOf(node).substring(0, 1));
         text.setFill(Color.WHITE);
         paneTree.getChildren().add(text);
 
+
         if (node.left != null)
-            draw(x, y, x - (separation * 2), y + separation, node.left);
+            draw(x, y, x - 40, y + 70, node.left);
         if (node.right != null)
-            draw(x, y, x + (separation * 2), y + separation, node.right);
+            draw(x, y, x + 40, y + 70, node.right);
+    }
+
+    public void toBinaryTree() {
+        for (String s : arrayList) {
+            binaryTree.insertar(s);
+        }
     }
 }
+
+/*
+* if (node != null && node.root != null)
+            if (((String)node.getData()).compareTo((String)node.root.getData()) > 0) {
+                //Es derecha
+                x += 5;
+            } else {
+                //Es izquierda
+                x -= 100;
+            }
+*
+*
+*
+* */
