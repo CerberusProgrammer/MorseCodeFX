@@ -22,6 +22,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class App implements Initializable {
@@ -59,17 +60,38 @@ public class App implements Initializable {
     }
 
     @FXML
-    void insertMorseCode(ActionEvent event) throws IOException {
-        TextInputDialog dialog = new TextInputDialog("W .--");
+    void encoder(ActionEvent event) {
+        TextInputDialog dialog = new TextInputDialog("Hola mundo...");
 
         dialog.setTitle("Value Input");
         dialog.setHeaderText("Enter a value:");
         dialog.setContentText("Value:");
 
         String string = dialog.showAndWait().get();
+
+        ArrayList<String> morseCode = new ArrayList<>();
+        String[] strings = string.split("");
+        ArrayList<Node<String>> strings1 = binaryTree.recorridoPosOrden();
+
+        for (String s: strings)
+            for (int i = 0; i < s.length(); i++)
+                for (Node<String> st : strings1)
+                    if (s.toUpperCase().substring(i, i + 1).equals(st.getData().substring(0, 1)))
+                        morseCode.add(st.getData());
+
+        for (String s: morseCode)
+            textAreaNormal.appendText(s + "\n");
     }
 
-    public void decoder() {
+    @FXML
+    void decoder(ActionEvent event) {
+        TextInputDialog dialog = new TextInputDialog(".... --- .-.. .- -- ..- -. -.. ---");
+
+        dialog.setTitle("Value Input");
+        dialog.setHeaderText("Enter a value:");
+        dialog.setContentText("Value:");
+
+        String string = dialog.showAndWait().get();
 
     }
 

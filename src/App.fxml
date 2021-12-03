@@ -11,7 +11,8 @@
     <children>
         <ToolBar prefHeight="40.0" prefWidth="1280.0">
             <items>
-                <Button mnemonicParsing="false" onAction="#insertMorseCode" text="Ingresar" />
+                <Button mnemonicParsing="false" onAction="#encoder" text="Codificador" />
+            <Button mnemonicParsing="false" onAction="#decoder" text="Decodificador" />
             </items>
         </ToolBar>
         <TextArea fx:id="textAreaNormal" layoutX="899.0" layoutY="50.0" prefHeight="660.0" prefWidth="371.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0,0,0);" AnchorPane.leftAnchor="899.0" AnchorPane.rightAnchor="10.0" />
