@@ -2,7 +2,6 @@ import BinaryTree.BinaryTree;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 public class Decoder {
 
@@ -25,7 +24,7 @@ public class Decoder {
 
     public static void toBinaryTree() {
         for (String s: arrayList) {
-            binaryTree.insertar(s);
+            binaryTree.insert(s);
         }
     }
 }

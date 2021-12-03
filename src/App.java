@@ -45,7 +45,7 @@ public class App implements Initializable {
             bufferedReader.close();
 
             for (String s : arrayList)
-                binaryTree.insertar(s);
+                binaryTree.insert(s);
 
             displayBinaryTree();
         } catch (Exception e) {
@@ -57,9 +57,9 @@ public class App implements Initializable {
     void encoder(ActionEvent event) {
         TextInputDialog dialog = new TextInputDialog("Hola mundo...");
 
-        dialog.setTitle("Value Input");
-        dialog.setHeaderText("Enter a value:");
-        dialog.setContentText("Value:");
+        dialog.setTitle("Encoder Input");
+        dialog.setHeaderText("Ingresa una cadena de texto");
+        dialog.setContentText("Texto:");
 
         String string = dialog.showAndWait().get();
 
@@ -81,9 +81,9 @@ public class App implements Initializable {
     void decoder(ActionEvent event) {
         TextInputDialog dialog = new TextInputDialog(".... --- .-.. .-");
 
-        dialog.setTitle("Value Input");
-        dialog.setHeaderText("Enter a value:");
-        dialog.setContentText("Value:");
+        dialog.setTitle("Decoder Input");
+        dialog.setHeaderText("Ingresa un codigo morse con espacios");
+        dialog.setContentText("Codigo:");
 
         String string = dialog.showAndWait().get();
 

@@ -11,7 +11,7 @@ public class BinaryTree<E> {
         this.size = 0;
     }
 
-    public Node<E> insertarRaiz(E node) {
+    public Node<E> insertRoot(E node) {
         if (!estaVacia())
             return null;
 
@@ -21,49 +21,55 @@ public class BinaryTree<E> {
         return root;
     }
 
-    public Node<E> insertarHijoIzquierdo(Node<E> node, E data) {
-        Node<E> temporal = check(node);
+    public Node<E> insertLeft(Node<E> node, E data) {
+        Node<E> temp = check(node);
 
-        if (temporal.getLeft() != null)
+        if (temp.getLeft() != null)
             return null;
 
-        Node<E> hijoIzquierdo = crearNodo(data, temporal, null, null);
-        temporal.setLeft(hijoIzquierdo);
+        Node<E> left = crearNodo(data, temp, null, null);
+        temp.setLeft(left);
         size++;
 
-        return hijoIzquierdo;
+        return left;
     }
 
-    public Node<E> insertarHijoDerecho(Node<E> node, E data) {
-        Node<E> temporal = check(node);
+    public Node<E> insertRight(Node<E> node, E data) {
+        Node<E> temp = check(node);
 
-        if (temporal.getRight() != null)
+        if (temp.getRight() != null)
             return null;
 
-        Node<E> hijoDerecho = crearNodo(data, temporal, null, null);
-        temporal.setRight(hijoDerecho);
+        Node<E> right = crearNodo(data, temp, null, null);
+        temp.setRight(right);
         size++;
 
-        return hijoDerecho;
+        return right;
     }
 
-    public Node<E> insertar(E data) {
-        return insertar(data, getRoot());
+    public Node<E> insert(E data) {
+        return insert(data, getRoot());
     }
 
-    private Node<E> insertar(E data, Node<E> node) {
+    /*
+     * compareTo()
+     * return x < 0  = El que llama es primero
+     * return x == 0 = Equivalentes
+     * return x > 0  = El parametro es primero
+     */
+    private Node<E> insert(E data, Node<E> node) {
         if (node == null)
-            return insertarRaiz(data);
+            return insertRoot(data);
         else if (((Comparable<E>) data).compareTo(node.getData()) < 0) {
             if (getLeft(node) == null)
-                return insertarHijoIzquierdo(check(node), data);
+                return insertLeft(check(node), data);
 
-            return insertar(data, getLeft(node));
+            return insert(data, getLeft(node));
         } else {
             if (getRight(node) == null)
-                return insertarHijoDerecho(check(node), data);
+                return insertRight(check(node), data);
 
-            return insertar(data, getRight(node));
+            return insert(data, getRight(node));
         }
     }
 
@@ -76,24 +82,24 @@ public class BinaryTree<E> {
     }
 
     public Iterable<Node<E>> getChildren(Node<E> node) {
-        ArrayList<Node<E>> hijos = new ArrayList<>(2);
+        ArrayList<Node<E>> nodes = new ArrayList<>(2);
 
         if (getLeft(node) != null)
-            hijos.add(getLeft(node));
+            nodes.add(getLeft(node));
 
         if (getRight(node) != null)
-            hijos.add(getRight(node));
+            nodes.add(getRight(node));
 
-        return hijos;
+        return nodes;
     }
 
     public ArrayList<Node<E>> preOrden() {
-        ArrayList<Node<E>> elementos = new ArrayList<>();
+        ArrayList<Node<E>> node = new ArrayList<>();
 
         if (!estaVacia())
-            preOrden(getRoot(), elementos);
+            preOrden(getRoot(), node);
 
-        return elementos;
+        return node;
     }
 
     private void preOrden(Node<E> root, ArrayList<Node<E>> data) {
@@ -104,12 +110,12 @@ public class BinaryTree<E> {
     }
 
     public ArrayList<Node<E>> inOrden() {
-        ArrayList<Node<E>> elementos = new ArrayList<>();
+        ArrayList<Node<E>> node = new ArrayList<>();
 
         if (!estaVacia())
-            inOrden(getRoot(), elementos);
+            inOrden(getRoot(), node);
 
-        return elementos;
+        return node;
     }
 
     private void inOrden(Node<E> root, ArrayList<Node<E>> data) {
@@ -123,17 +129,17 @@ public class BinaryTree<E> {
     }
 
     public ArrayList<Node<E>> posOrden() {
-        ArrayList<Node<E>> elementos = new ArrayList<>();
+        ArrayList<Node<E>> node = new ArrayList<>();
 
         if (!estaVacia())
-            posOrden(getRoot(), elementos);
+            posOrden(getRoot(), node);
 
-        return elementos;
+        return node;
     }
 
     private void posOrden(Node<E> root, ArrayList<Node<E>> data) {
-        for (Node<E> elemento : getChildren(root))
-            posOrden(elemento, data);
+        for (Node<E> node : getChildren(root))
+            posOrden(node, data);
 
         data.add(root);
     }

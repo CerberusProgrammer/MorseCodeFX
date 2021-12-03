@@ -12,7 +12,7 @@ public class Start extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Start.class.getResource("App.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
-        stage.setTitle("MorseCodeFX");
+        stage.setTitle("MorseCodeFX - Omar Flores Salazar (UABC)");
         stage.setScene(scene);
         stage.show();
     }
