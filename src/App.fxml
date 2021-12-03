@@ -15,7 +15,7 @@
             <Button mnemonicParsing="false" onAction="#decoder" text="Decodificador" />
             </items>
         </ToolBar>
-        <TextArea fx:id="textAreaNormal" layoutX="899.0" layoutY="50.0" prefHeight="660.0" prefWidth="371.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0,0,0);" AnchorPane.leftAnchor="899.0" AnchorPane.rightAnchor="10.0" />
-        <Pane fx:id="paneTree" layoutX="10.0" layoutY="50.0" prefHeight="660.0" prefWidth="875.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0,0,0); -fx-background-color: white; -fx-background-radius: 5;" />
+        <TextArea fx:id="textArea" layoutX="899.0" layoutY="50.0" prefHeight="660.0" prefWidth="371.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0,0,0);" AnchorPane.leftAnchor="899.0" AnchorPane.rightAnchor="10.0" />
+        <Pane fx:id="pane" layoutX="10.0" layoutY="50.0" prefHeight="660.0" prefWidth="875.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0,0,0); -fx-background-color: white; -fx-background-radius: 5;" />
     </children>
 </AnchorPane>

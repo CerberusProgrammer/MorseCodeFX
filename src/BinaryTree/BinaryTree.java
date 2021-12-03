@@ -11,37 +11,6 @@ public class BinaryTree<E> {
         this.size = 0;
     }
 
-    public int getSize() {
-        return size;
-    }
-
-    public Node<E> getRoot() {
-        return root;
-    }
-
-    private Node<E> check(Node<E> node) {
-        if (node == null)
-            return null;
-
-        return node.getRoot() == node ? null : node;
-    }
-
-    public Node<E> getRoot(Node<E> node) {
-        return check(node).getRoot();
-    }
-
-    public Node<E> getLeft(Node<E> node) {
-        return check(node).getLeft();
-    }
-
-    public Node<E> getRight(Node<E> node) {
-        return check(node).getRight();
-    }
-
-    public boolean isRoot(Node<E> node) {
-        return node == getRoot();
-    }
-
     public Node<E> insertarRaiz(E node) {
         if (!estaVacia())
             return null;
@@ -78,101 +47,125 @@ public class BinaryTree<E> {
         return hijoDerecho;
     }
 
-    public Node<E> insertar(E dato) {
-        return insertar(dato, getRoot());
+    public Node<E> insertar(E data) {
+        return insertar(data, getRoot());
     }
 
-    private Node<E> insertar(E dato, Node<E> nodo) {
-        if (nodo == null)
-            return insertarRaiz(dato);
-        else if (((Comparable<E>) dato).compareTo(nodo.getData()) < 0) {
-            if (getLeft(nodo) == null)
-                return insertarHijoIzquierdo(check(nodo), dato);
+    private Node<E> insertar(E data, Node<E> node) {
+        if (node == null)
+            return insertarRaiz(data);
+        else if (((Comparable<E>) data).compareTo(node.getData()) < 0) {
+            if (getLeft(node) == null)
+                return insertarHijoIzquierdo(check(node), data);
 
-            return insertar(dato, getLeft(nodo));
+            return insertar(data, getLeft(node));
         } else {
-            if (getRight(nodo) == null)
-                return insertarHijoDerecho(check(nodo), dato);
+            if (getRight(node) == null)
+                return insertarHijoDerecho(check(node), data);
 
-            return insertar(dato, getRight(nodo));
+            return insertar(data, getRight(node));
         }
     }
 
-    private Node<E> crearNodo(E elemento, Node<E> padre,
-                              Node<E> hijoIzquierdo,
-                              Node<E> hijoDerecho) {
-        return new Node<E>(elemento, padre, hijoIzquierdo, hijoDerecho);
+    private Node<E> crearNodo(E data, Node<E> root, Node<E> left, Node<E> right) {
+        return new Node<E>(data, root, left, right);
     }
 
     public boolean estaVacia() {
         return getSize() == 0;
     }
 
-
-    public Iterable<Node<E>> obtenerHijos(Node<E> elemento) {
+    public Iterable<Node<E>> getChildren(Node<E> node) {
         ArrayList<Node<E>> hijos = new ArrayList<>(2);
 
-        if (getLeft(elemento) != null)
-            hijos.add(getLeft(elemento));
+        if (getLeft(node) != null)
+            hijos.add(getLeft(node));
 
-        if (getRight(elemento) != null)
-            hijos.add(getRight(elemento));
+        if (getRight(node) != null)
+            hijos.add(getRight(node));
 
         return hijos;
     }
 
-
-    public ArrayList<Node<E>> recorridoPreOrden() {
+    public ArrayList<Node<E>> preOrden() {
         ArrayList<Node<E>> elementos = new ArrayList<>();
 
         if (!estaVacia())
-            recorridoPreOrden(getRoot(), elementos);
+            preOrden(getRoot(), elementos);
 
         return elementos;
     }
 
-    private void recorridoPreOrden(Node<E> raiz, ArrayList<Node<E>> elementos) {
-        elementos.add(raiz);
+    private void preOrden(Node<E> root, ArrayList<Node<E>> data) {
+        data.add(root);
 
-        for (Node<E> elemento : obtenerHijos(raiz))
-            recorridoPreOrden(elemento, elementos);
+        for (Node<E> elemento : getChildren(root))
+            preOrden(elemento, data);
     }
 
-    public ArrayList<Node<E>> recorridoInOrden() {
+    public ArrayList<Node<E>> inOrden() {
         ArrayList<Node<E>> elementos = new ArrayList<>();
 
         if (!estaVacia())
-            recorridoInOrden(getRoot(), elementos);
+            inOrden(getRoot(), elementos);
 
         return elementos;
     }
 
-    private void recorridoInOrden(Node<E> raiz, ArrayList<Node<E>> elementos) {
-        if (getLeft(raiz) != null)
-            recorridoInOrden(getLeft(raiz), elementos);
+    private void inOrden(Node<E> root, ArrayList<Node<E>> data) {
+        if (getLeft(root) != null)
+            inOrden(getLeft(root), data);
 
-        elementos.add(raiz);
+        data.add(root);
 
-        if (getRight(raiz) != null)
-            recorridoInOrden(getRight(raiz), elementos);
+        if (getRight(root) != null)
+            inOrden(getRight(root), data);
     }
 
-
-    public ArrayList<Node<E>> recorridoPosOrden() {
+    public ArrayList<Node<E>> posOrden() {
         ArrayList<Node<E>> elementos = new ArrayList<>();
 
         if (!estaVacia())
-            recorridoPosOrden(getRoot(), elementos);
+            posOrden(getRoot(), elementos);
 
         return elementos;
     }
 
-    private void recorridoPosOrden(Node<E> raiz, ArrayList<Node<E>> elementos) {
-        for (Node<E> elemento : obtenerHijos(raiz))
-            recorridoPosOrden(elemento, elementos);
+    private void posOrden(Node<E> root, ArrayList<Node<E>> data) {
+        for (Node<E> elemento : getChildren(root))
+            posOrden(elemento, data);
 
-        elementos.add(raiz);
+        data.add(root);
     }
 
+    public int getSize() {
+        return size;
+    }
 
+    public Node<E> getRoot() {
+        return root;
+    }
+
+    private Node<E> check(Node<E> node) {
+        if (node == null)
+            return null;
+
+        return node.getRoot() == node ? null : node;
+    }
+
+    public Node<E> getRoot(Node<E> node) {
+        return check(node).getRoot();
+    }
+
+    public Node<E> getLeft(Node<E> node) {
+        return check(node).getLeft();
+    }
+
+    public Node<E> getRight(Node<E> node) {
+        return check(node).getRight();
+    }
+
+    public boolean isRoot(Node<E> node) {
+        return node == getRoot();
+    }
 }
