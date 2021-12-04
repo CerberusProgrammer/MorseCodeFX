@@ -160,8 +160,13 @@ public class App implements Initializable {
                 if (s.equals(st.getData().substring(2)))
                     morseCode.add(st.getData().substring(0, 1));
 
+       textArea.appendText("Codigo ingresado: " + string + "\n");
+       textArea.appendText("Palabra decodificada: ");
+
         for (String s : morseCode)
-            textArea.appendText(s + "\n");
+            textArea.appendText(s);
+
+        textArea.appendText("\n");
     }
 
     /**
